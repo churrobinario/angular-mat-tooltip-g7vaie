@@ -1,0 +1,67 @@
+<div class="row alertpage">
+
+    <div class="col-md-1"> 
+    </div>
+
+    <div Class= "col-md-11">
+    </div>
+
+    <div class="col-md-1" *ngIf="!displayAllSite"> 
+    </div>
+
+    <div [ngClass]="{'col-md-9': displayAllSite , 'col-md-11': !displayAllSite }">
+
+        <div class="table-container d-flex flex-column" *ngIf="displayData?.length">
+            <table mat-table [dataSource]="displayData" class="other-roles-tbl" matSort (matSortChange)="sortData($event)">
+    
+                <ng-container matColumnDef="Alert">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Alert </th>
+                    <td mat-cell *matCellDef="let row" class="tooltip">
+                            <!-- <span matTooltip="{{(row?.conditionals)?(row.conditionals | json):''}}">{{row.alert}}</span>  -->{{row.alert}}
+                            <span class="tooltiptext">{{row.conditionals | json}}</span>
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Severity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Severity </th>
+                    <td class="alertspage-content__priority" mat-cell *matCellDef="let row">
+                        <div>
+                            <span *ngIf="row.severitytype == 2"><i class="fas fa-exclamation-triangle"></i></span>
+                            <span *ngIf="row.severitytype == 1"><i
+                                    class="fas fa-exclamation-circle fa-exclamation-circle__yellow"></i></span>
+                            <span *ngIf="row.severitytype == 0"><img src="./assets/images/low_alert_icon.svg"
+                                    class="alert_low"></span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.type}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="EnableDisableCheckbox">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Enable Alert </th>
+                    <td *matCellDef="let row">
+                        <mat-checkbox></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Log">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Log Data </th>
+                    <td *matCellDef="let row">
+                        <mat-checkbox></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+            </table>
+            <div class="noAlerts" *ngIf="displayNoRecord">There are no alerts to show.</div>
+        </div>
+    </div>
+
+</div>
